@@ -6,17 +6,17 @@ use tui::{
 };
 
 mod app;
-mod group_tabs;
-mod host_list;
 mod input_handler;
 mod render_config;
+mod render_group_tabs;
+mod render_host_list;
 mod ssh_config_store;
 mod term;
 use app::*;
-use group_tabs::*;
-use host_list::*;
 use input_handler::*;
 use render_config::*;
+use render_group_tabs::*;
+use render_host_list::*;
 use ssh_config_store::*;
 use term::*;
 
