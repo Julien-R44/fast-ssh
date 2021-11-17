@@ -45,7 +45,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .direction(Direction::Vertical)
                 .margin(1)
                 .horizontal_margin(4)
-                .constraints([Constraint::Percentage(10), Constraint::Percentage(90)].as_ref())
+                .constraints([Constraint::Length(3), Constraint::Percentage(90)].as_ref())
                 .split(frame.size());
 
             let chunk_b = Layout::default()

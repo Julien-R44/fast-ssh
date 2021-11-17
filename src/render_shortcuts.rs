@@ -21,9 +21,11 @@ pub fn render_shortcuts(_app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
         ));
 
     let text = vec![
-        Spans::from("'c' to alternate between configuration display mode"),
-        Spans::from("'g' to alternate between groups mode"),
-        Spans::from("'Enter' to SSH to your server"),
+        Spans::from("'Enter': Validate"),
+        Spans::from("'Tab': Change Group"),
+        Spans::from("'c': Configuration Display Mode"),
+        // Spans::from("'g' to alternate between groups mode"),
+        Spans::from("'q': Exit"),
     ];
 
     let paragraph = Paragraph::new(text)
