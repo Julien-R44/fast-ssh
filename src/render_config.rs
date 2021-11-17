@@ -32,7 +32,7 @@ pub fn render_config(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBacke
 }
 
 fn get_paragraph_for_global_mode<'a>(app: &'a App, block: Block<'a>) -> Paragraph<'a> {
-    let spans: Vec<Spans> = app.groups.iter().fold(vec![], |mut acc, group| {
+    let spans: Vec<Spans> = app.scs.groups.iter().fold(vec![], |mut acc, group| {
         let new_spans: Vec<Spans> = group
             .items
             .iter()

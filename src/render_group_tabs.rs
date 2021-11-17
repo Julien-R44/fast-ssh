@@ -17,6 +17,7 @@ pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
         .border_type(tui::widgets::BorderType::Rounded);
 
     let titles = app
+        .scs
         .groups
         .iter()
         .map(|t| {

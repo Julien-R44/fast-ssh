@@ -1,42 +1,29 @@
 use std::process::Command;
 
-use tui::{
-    layout::{Constraint, Direction, Layout},
-    widgets::TableState,
-};
+use tui::layout::{Constraint, Direction, Layout};
 
 mod app;
+mod database;
 mod input_handler;
 mod render_config;
 mod render_group_tabs;
-mod render_host_list;
+mod render_host_table;
 mod render_shortcuts;
 mod ssh_config_store;
 mod term;
+
 use app::*;
 use input_handler::*;
 use render_config::*;
 use render_group_tabs::*;
-use render_host_list::*;
+use render_host_table::*;
 use render_shortcuts::*;
-use ssh_config_store::*;
 use term::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let scs = SshConfigStore::new().await?;
-
     let mut terminal = init_terminal()?;
-
-    let mut app = App {
-        selected_group: 0,
-        config_paragraph_offset: 0,
-        groups: &scs.groups,
-        host_state: TableState::default(),
-        should_quit: false,
-        should_spawn_ssh: false,
-        config_display_mode: ConfigDisplayMode::Selected,
-    };
+    let mut app = App::new().await?;
 
     app.host_state.select(Some(0));
 
@@ -57,16 +44,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     [
                         Constraint::Percentage(40),
                         Constraint::Length(2),
-                        Constraint::Percentage(40),
+                        Constraint::Percentage(30),
                         Constraint::Length(2),
-                        Constraint::Percentage(20),
+                        Constraint::Percentage(30),
                     ]
                     .as_ref(),
                 )
                 .split(chunks[1]);
 
             render_group_tabs(&app, chunks[0], frame);
-            render_host_list(&mut app, chunk_b[0], frame);
+            render_host_table(&mut app, chunk_b[0], frame);
             render_config(&mut app, chunk_b[2], frame);
             render_shortcuts(&app, chunk_b[4], frame);
         })?;
@@ -81,11 +68,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     restore_terminal(&mut terminal)?;
 
     if app.should_spawn_ssh {
-        // TODO: store full host in app
-        Command::new("ssh")
-            .arg(&app.get_selected_config().unwrap().full_name)
-            .spawn()?
-            .wait()?;
+        let selected_config = app.get_selected_config().unwrap();
+        let host_name = &selected_config.full_name;
+
+        app.db.save_host_values(
+            host_name,
+            selected_config.connection_count + 1,
+            chrono::offset::Local::now().timestamp(),
+        )?;
+
+        Command::new("ssh").arg(host_name).spawn()?.wait()?;
     }
 
     Ok(())
