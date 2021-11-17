@@ -9,7 +9,7 @@ use tui::{
     Frame,
 };
 
-pub fn render_shortcuts(app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
+pub fn render_shortcuts(_app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
     let block = Block::default()
         .borders(Borders::ALL)
         .border_type(tui::widgets::BorderType::Rounded)

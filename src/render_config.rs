@@ -5,9 +5,9 @@ use crate::{
 use std::io::Stdout;
 use tui::{
     backend::CrosstermBackend,
-    layout::{Constraint, Layout, Rect},
+    layout::Rect,
     style::{Color, Modifier, Style},
-    text::{Span, Spans, Text},
+    text::{Span, Spans},
     widgets::{Block, BorderType, Borders, Paragraph, Wrap},
     Frame,
 };
