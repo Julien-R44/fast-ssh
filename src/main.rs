@@ -9,12 +9,14 @@ mod app;
 mod group_tabs;
 mod host_list;
 mod input_handler;
+mod render_config;
 mod ssh_config_store;
 mod term;
 use app::*;
 use group_tabs::*;
 use host_list::*;
 use input_handler::*;
+use render_config::*;
 use ssh_config_store::*;
 use term::*;
 
@@ -42,8 +44,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .constraints([Constraint::Percentage(10), Constraint::Percentage(90)].as_ref())
                 .split(frame.size());
 
-            render_group_tabs(&app, &chunks, frame);
-            render_host_list(&mut app, &chunks, frame);
+            let chunk_b = Layout::default()
+                .direction(Direction::Horizontal)
+                .margin(1)
+                .horizontal_margin(4)
+                .constraints([Constraint::Percentage(50), Constraint::Percentage(50)].as_ref())
+                .split(chunks[1]);
+
+            render_group_tabs(&app, chunks[0], frame);
+            render_host_list(&mut app, chunk_b[0], frame);
+            render_config(&mut app, chunk_b[1], frame);
         })?;
 
         handle_inputs(&mut app)?;
@@ -55,12 +65,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     restore_terminal(&mut terminal)?;
 
-    // TODO: store full host in app
-    let host = &app.groups[app.selected_group].items[app.host_state.selected().unwrap()];
-    let group = &app.groups[app.selected_group];
-    let full_host = format!("{}/{}", group.name, host.name);
-
-    Command::new("ssh").arg(full_host).spawn()?.wait()?;
+    if app.should_spawn_ssh {
+        // TODO: store full host in app
+        let host = &app.groups[app.selected_group].items[app.host_state.selected().unwrap()];
+        let group = &app.groups[app.selected_group];
+        let full_host = format!("{}/{}", group.name, host.name);
+        Command::new("ssh").arg(full_host).spawn()?.wait()?;
+    }
 
     Ok(())
 }

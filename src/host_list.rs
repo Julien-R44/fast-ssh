@@ -11,13 +11,9 @@ use tui::{
 
 use crate::app::App;
 
-pub fn render_host_list(
-    app: &mut App,
-    chunks: &[Rect],
-    frame: &mut Frame<CrosstermBackend<Stdout>>,
-) {
+pub fn render_host_list(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
     let block = Block::default().title("Hosts").borders(Borders::ALL);
-    frame.render_widget(block, chunks[1]);
+    frame.render_widget(block, area);
 
     let items: Vec<ListItem> = app.groups[app.selected_group]
         .items
@@ -40,5 +36,5 @@ pub fn render_host_list(
         )
         .highlight_symbol(">> ");
 
-    frame.render_stateful_widget(items, chunks[1], &mut app.host_state);
+    frame.render_stateful_widget(items, area, &mut app.host_state);
 }

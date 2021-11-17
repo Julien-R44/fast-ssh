@@ -8,7 +8,7 @@ use tui::{backend::CrosstermBackend, Frame};
 
 use crate::App;
 
-pub fn render_group_tabs(app: &App, chunks: &[Rect], frame: &mut Frame<CrosstermBackend<Stdout>>) {
+pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
     let block = Block::default().title("Groups").borders(Borders::ALL);
 
     let titles = app
@@ -32,5 +32,5 @@ pub fn render_group_tabs(app: &App, chunks: &[Rect], frame: &mut Frame<Crossterm
                 .bg(Color::Black),
         );
 
-    frame.render_widget(tabs, chunks[0]);
+    frame.render_widget(tabs, area);
 }
