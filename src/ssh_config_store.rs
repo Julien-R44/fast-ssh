@@ -5,6 +5,7 @@ use ssh_cfg::{SshConfig, SshConfigParser, SshHostConfig};
 #[derive(Debug)]
 pub struct SshGroupItem {
     pub name: String,
+    pub full_name: String,
     pub host_config: SshHostConfig,
 }
 
@@ -47,7 +48,8 @@ impl SshConfigStore {
                 let group = groups.iter_mut().find(|g| g.name == group_name);
 
                 let group_item = SshGroupItem {
-                    name: group_key.to_string(),
+                    name: group_key,
+                    full_name: key.to_string(),
                     host_config: value.clone(),
                 };
 
@@ -61,20 +63,19 @@ impl SshConfigStore {
                 }
 
                 let group = &mut group.unwrap().items;
-                group.push(SshGroupItem {
-                    name: group_key,
-                    host_config: value.clone(),
-                });
+                group.push(group_item);
 
                 return;
             }
 
             groups[0].items.push(SshGroupItem {
+                full_name: key.to_string(),
                 name: key.to_string(),
                 host_config: value.clone(),
             });
         });
 
-        self.groups = groups
+        groups.reverse();
+        self.groups = groups;
     }
 }

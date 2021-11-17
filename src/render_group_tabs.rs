@@ -9,7 +9,12 @@ use tui::{backend::CrosstermBackend, Frame};
 use crate::App;
 
 pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
-    let block = Block::default().title("Groups").borders(Borders::ALL);
+    let block = Block::default()
+        .title(Span::styled("Groups", Style::default().fg(Color::White)))
+        .borders(Borders::ALL)
+        .border_style(Style::default().fg(Color::LightMagenta))
+        .title_alignment(tui::layout::Alignment::Center)
+        .border_type(tui::widgets::BorderType::Rounded);
 
     let titles = app
         .groups
@@ -17,7 +22,7 @@ pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
         .map(|t| {
             Spans::from(Span::styled(
                 t.name.to_string(),
-                Style::default().fg(Color::Yellow),
+                Style::default().fg(Color::White),
             ))
         })
         .collect();
@@ -25,7 +30,6 @@ pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
     let tabs = Tabs::new(titles)
         .block(block)
         .select(app.selected_group)
-        .style(Style::default().fg(Color::Cyan))
         .highlight_style(
             Style::default()
                 .add_modifier(Modifier::BOLD)

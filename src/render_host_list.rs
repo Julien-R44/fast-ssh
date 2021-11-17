@@ -12,8 +12,12 @@ use tui::{
 use crate::app::App;
 
 pub fn render_host_list(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
-    let block = Block::default().title("Hosts").borders(Borders::ALL);
-    frame.render_widget(block, area);
+    let block = Block::default()
+        .borders(Borders::ALL)
+        .border_style(Style::default().fg(Color::LightMagenta))
+        .title_alignment(tui::layout::Alignment::Center)
+        .border_type(tui::widgets::BorderType::Rounded)
+        .title(Span::styled("Hosts", Style::default().fg(Color::White)));
 
     let items: Vec<ListItem> = app.groups[app.selected_group]
         .items
@@ -28,10 +32,10 @@ pub fn render_host_list(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBa
         .collect();
 
     let items = List::new(items)
-        .block(Block::default().borders(Borders::ALL).title("Hosts"))
+        .block(block)
         .highlight_style(
             Style::default()
-                .bg(Color::LightRed)
+                .bg(Color::Magenta)
                 .add_modifier(Modifier::BOLD),
         )
         .highlight_symbol(">> ");
