@@ -1,9 +1,15 @@
 [package]
-name = "rs-ssh"
-version = "0.1.0"
+name = "fast-ssh"
+version = "0.0.1"
+license = "MIT"
+description = "Quicky connect to your servers by navigating through your SSH config."
+readme = "README.md"
+homepage = "https://github.com/Julien-R44/fast-ssh"
+repository = "https://github.com/Julien-R44/fast-ssh"
+keywords = ["cli", "tui", "ssh", "ssh-config"]
+categories = ["command-line-utilities", "config"]
+authors = ["Julien-R44 <julien@ripouteau.com>"]
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 tui = { version = "0.16", default-features = false, features = ['crossterm'] }

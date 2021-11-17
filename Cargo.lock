@@ -181,6 +181,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f7531096570974c3a9dcf9e4b8e1cede1ec26cf5046219fb3b9d897503b9be59"
 
 [[package]]
+name = "fast-ssh"
+version = "0.0.1"
+dependencies = [
+ "crossterm 0.22.1",
+ "futures",
+ "ssh_cfg",
+ "tokio",
+ "tui",
+]
+
+[[package]]
 name = "fastrand"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -519,17 +530,6 @@ checksum = "528532f3d801c87aec9def2add9ca802fe569e44a544afe633765267840abe64"
 dependencies = [
  "getrandom",
  "redox_syscall",
-]
-
-[[package]]
-name = "rs-ssh"
-version = "0.1.0"
-dependencies = [
- "crossterm 0.22.1",
- "futures",
- "ssh_cfg",
- "tokio",
- "tui",
 ]
 
 [[package]]
