@@ -6,6 +6,8 @@ use ssh_cfg::{SshConfig, SshConfigParser, SshHostConfig};
 pub struct SshGroupItem {
     pub name: String,
     pub full_name: String,
+    pub connection_count: i64,
+    pub last_used: String,
     pub host_config: SshHostConfig,
 }
 
@@ -51,6 +53,8 @@ impl SshConfigStore {
 
                 let group_item = SshGroupItem {
                     name: group_key,
+                    connection_count: key.len() as i64,
+                    last_used: "A".to_string(),
                     full_name: key.to_string(),
                     host_config: value.clone(),
                 };
@@ -72,6 +76,8 @@ impl SshConfigStore {
 
             groups[0].items.push(SshGroupItem {
                 full_name: key.to_string(),
+                connection_count: key.len() as i64,
+                last_used: "B".to_string(),
                 name: key.to_string(),
                 host_config: value.clone(),
             });

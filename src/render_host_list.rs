@@ -2,10 +2,10 @@ use std::io::Stdout;
 
 use tui::{
     backend::CrosstermBackend,
-    layout::Rect,
-    style::{Color, Modifier, Style},
-    text::{Span, Spans},
-    widgets::{Block, Borders, List, ListItem},
+    layout::{Constraint, Rect},
+    style::{Color, Style},
+    text::Span,
+    widgets::{Block, Borders, Cell, Row, Table},
     Frame,
 };
 
@@ -19,26 +19,38 @@ pub fn render_host_list(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBa
         .border_type(tui::widgets::BorderType::Rounded)
         .title(Span::styled(" Hosts ", Style::default().fg(Color::White)));
 
-    let items: Vec<ListItem> = app.groups[app.selected_group]
-        .items
+    let normal_style = Style::default();
+    let selected_style = Style::default().fg(Color::Magenta);
+
+    let header_cells = ["Host", "Last Used", "Nb Connection"]
         .iter()
-        .map(|i| {
-            ListItem::new(Spans::from(Span::styled(
-                i.name.to_string(),
-                Style::default(),
-            )))
-            .style(Style::default().fg(Color::White))
-        })
-        .collect();
+        .map(|h| Cell::from(*h).style(Style::default().fg(Color::White)));
 
-    let items = List::new(items)
+    let header = Row::new(header_cells)
+        .style(normal_style)
+        .height(1)
+        .bottom_margin(1);
+
+    let rows = app.get_selected_group().items.iter().map(|item| {
+        let cells = [
+            Cell::from(item.name.to_string()).style(normal_style),
+            Cell::from(item.last_used.to_string()).style(normal_style),
+            Cell::from(item.connection_count.to_string()).style(normal_style),
+        ];
+
+        Row::new(cells).height(1).bottom_margin(1)
+    });
+
+    let t = Table::new(rows)
+        .header(header)
         .block(block)
-        .highlight_style(
-            Style::default()
-                .fg(Color::Magenta)
-                .add_modifier(Modifier::BOLD),
-        )
-        .highlight_symbol("> ");
+        .highlight_style(selected_style)
+        .highlight_symbol(">> ")
+        .widths(&[
+            Constraint::Percentage(30),
+            Constraint::Percentage(30),
+            Constraint::Percentage(30),
+        ]);
 
-    frame.render_stateful_widget(items, area, &mut app.host_state);
+    frame.render_stateful_widget(t, area, &mut app.host_state);
 }

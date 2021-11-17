@@ -2,7 +2,7 @@ use std::process::Command;
 
 use tui::{
     layout::{Constraint, Direction, Layout},
-    widgets::ListState,
+    widgets::TableState,
 };
 
 mod app;
@@ -32,7 +32,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         selected_group: 0,
         config_paragraph_offset: 0,
         groups: &scs.groups,
-        host_state: ListState::default(),
+        host_state: TableState::default(),
         should_quit: false,
         should_spawn_ssh: false,
         config_display_mode: ConfigDisplayMode::Selected,

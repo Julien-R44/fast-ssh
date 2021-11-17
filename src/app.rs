@@ -1,4 +1,4 @@
-use tui::widgets::ListState;
+use tui::widgets::TableState;
 
 use crate::ssh_config_store::{SshGroup, SshGroupItem};
 
@@ -9,7 +9,7 @@ pub enum ConfigDisplayMode {
 
 pub struct App<'a> {
     pub selected_group: usize,
-    pub host_state: ListState,
+    pub host_state: TableState,
     pub groups: &'a [SshGroup],
     pub config_display_mode: ConfigDisplayMode,
     pub should_quit: bool,
