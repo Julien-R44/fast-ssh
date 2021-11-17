@@ -32,9 +32,22 @@ pub fn render_config(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBacke
 }
 
 fn get_paragraph_for_global_mode<'a>(app: &'a App, block: Block<'a>) -> Paragraph<'a> {
-    Paragraph::new("Hello")
+    let spans: Vec<Spans> = app.groups.iter().fold(vec![], |mut acc, group| {
+        let new_spans: Vec<Spans> = group
+            .items
+            .iter()
+            .map(|item| ssh_group_item_to_spans(item))
+            .flatten()
+            .collect();
+
+        acc.extend(new_spans);
+        acc
+        // .fold(vec![], |item| ssh_group_item_to_spans(item));
+    });
+
+    Paragraph::new(spans)
         .block(block)
-        .wrap(Wrap { trim: true })
+        .wrap(Wrap { trim: false })
 }
 
 fn get_paragraph_for_selected_mode<'a>(app: &'a App, block: Block<'a>) -> Paragraph<'a> {
@@ -51,7 +64,9 @@ fn get_paragraph_for_selected_mode<'a>(app: &'a App, block: Block<'a>) -> Paragr
         spans = ssh_group_item_to_spans(config);
     }
 
-    Paragraph::new(spans).block(block).wrap(Wrap { trim: true })
+    Paragraph::new(spans)
+        .block(block)
+        .wrap(Wrap { trim: false })
 }
 
 fn ssh_group_item_to_spans(config: &SshGroupItem) -> Vec<Spans> {
@@ -62,11 +77,17 @@ fn ssh_group_item_to_spans(config: &SshGroupItem) -> Vec<Spans> {
 
     config.host_config.iter().for_each(|(key, value)| {
         spans.push(Spans::from(vec![
+            Span::styled("  ", Style::default().fg(Color::Magenta)),
             Span::styled(key.to_string(), Style::default().fg(Color::Magenta)),
             Span::styled(" ", Style::default().fg(Color::White)),
             Span::styled(value, Style::default().fg(Color::White)),
         ]));
     });
+
+    spans.push(Spans::from(vec![Span::styled(
+        "\n",
+        Style::default().fg(Color::White),
+    )]));
 
     spans
 }
