@@ -10,7 +10,7 @@ use crate::App;
 
 pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
     let block = Block::default()
-        .title(Span::styled("Groups", Style::default().fg(Color::White)))
+        .title(Span::styled(" Groups ", Style::default().fg(Color::White)))
         .borders(Borders::ALL)
         .border_style(Style::default().fg(Color::LightMagenta))
         .title_alignment(tui::layout::Alignment::Center)

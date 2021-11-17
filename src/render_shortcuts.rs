@@ -15,7 +15,10 @@ pub fn render_shortcuts(_app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
         .border_type(tui::widgets::BorderType::Rounded)
         .border_style(Style::default().fg(Color::LightMagenta))
         .title_alignment(tui::layout::Alignment::Center)
-        .title(Span::styled("Shortcuts", Style::default().fg(Color::White)));
+        .title(Span::styled(
+            " Shortcuts ",
+            Style::default().fg(Color::White),
+        ));
 
     let text = vec![
         Spans::from("'c' to alternate between configuration display mode"),

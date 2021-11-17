@@ -17,7 +17,7 @@ pub fn render_host_list(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBa
         .border_style(Style::default().fg(Color::LightMagenta))
         .title_alignment(tui::layout::Alignment::Center)
         .border_type(tui::widgets::BorderType::Rounded)
-        .title(Span::styled("Hosts", Style::default().fg(Color::White)));
+        .title(Span::styled(" Hosts ", Style::default().fg(Color::White)));
 
     let items: Vec<ListItem> = app.groups[app.selected_group]
         .items

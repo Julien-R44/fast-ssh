@@ -19,7 +19,7 @@ pub fn render_config(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBacke
         .border_style(Style::default().fg(Color::LightMagenta))
         .title_alignment(tui::layout::Alignment::Center)
         .title(Span::styled(
-            "Configuration",
+            " Configuration ",
             Style::default().fg(Color::White),
         ));
 
