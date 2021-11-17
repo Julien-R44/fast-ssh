@@ -1,6 +1,6 @@
 use crossterm::event::{self, Event, KeyCode};
 
-use crate::app::App;
+use crate::app::{App, ConfigDisplayMode};
 
 pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     if let Event::Key(key) = event::read()? {
@@ -36,6 +36,12 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     None => 0,
                 };
                 app.host_state.select(Some(i));
+            }
+            KeyCode::Char('c') => {
+                app.config_display_mode = match app.config_display_mode {
+                    ConfigDisplayMode::Global => ConfigDisplayMode::Selected,
+                    ConfigDisplayMode::Selected => ConfigDisplayMode::Global,
+                };
             }
             KeyCode::Char('q') => app.should_quit = true,
             KeyCode::Enter => app.should_spawn_ssh = true,

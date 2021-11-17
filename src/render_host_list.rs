@@ -35,10 +35,10 @@ pub fn render_host_list(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBa
         .block(block)
         .highlight_style(
             Style::default()
-                .bg(Color::Magenta)
+                .fg(Color::Magenta)
                 .add_modifier(Modifier::BOLD),
         )
-        .highlight_symbol(">> ");
+        .highlight_symbol("> ");
 
     frame.render_stateful_widget(items, area, &mut app.host_state);
 }

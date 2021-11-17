@@ -33,7 +33,7 @@ pub fn render_group_tabs(app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
         .highlight_style(
             Style::default()
                 .add_modifier(Modifier::BOLD)
-                .bg(Color::Black),
+                .bg(Color::Magenta),
         );
 
     frame.render_widget(tabs, area);
