@@ -9,7 +9,6 @@ pub enum ConfigDisplayMode {
 
 pub struct App<'a> {
     pub selected_group: usize,
-    pub selected_host: usize,
     pub host_state: ListState,
     pub groups: &'a [SshGroup],
     pub config_display_mode: ConfigDisplayMode,

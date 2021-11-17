@@ -29,14 +29,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut terminal = init_terminal()?;
 
     let mut app = App {
-        selected_group: 1,
-        selected_host: 0,
+        selected_group: 0,
         groups: &scs.groups,
         host_state: ListState::default(),
         should_quit: false,
         should_spawn_ssh: false,
         config_display_mode: ConfigDisplayMode::Selected,
     };
+
+    app.host_state.select(Some(0));
 
     loop {
         terminal.draw(|frame| {
@@ -78,10 +79,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     if app.should_spawn_ssh {
         // TODO: store full host in app
-        let host = &app.groups[app.selected_group].items[app.host_state.selected().unwrap()];
-        let group = &app.groups[app.selected_group];
-        let full_host = format!("{}/{}", group.name, host.name);
-        Command::new("ssh").arg(full_host).spawn()?.wait()?;
+        Command::new("ssh")
+            .arg(&app.get_selected_config().unwrap().full_name)
+            .spawn()?
+            .wait()?;
     }
 
     Ok(())

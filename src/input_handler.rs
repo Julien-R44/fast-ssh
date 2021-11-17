@@ -7,7 +7,6 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         match key.code {
             KeyCode::Tab => {
                 app.selected_group = (app.selected_group + 1) % app.groups.len();
-                app.selected_host = 0;
             }
             KeyCode::Down => {
                 let items = &app.groups[app.selected_group].items;

@@ -23,7 +23,9 @@ pub struct SshConfigStore {
 
 impl SshConfigStore {
     pub async fn new() -> Result<SshConfigStore, Box<dyn Error>> {
-        let ssh_config = SshConfigParser::parse_home().await?;
+        let ssh_config = SshConfigParser::parse_home()
+            .await
+            .expect("Failed to parse ~/.ssh/config");
 
         let mut scs = SshConfigStore {
             config: ssh_config,
