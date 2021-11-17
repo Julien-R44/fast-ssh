@@ -36,6 +36,13 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                 };
                 app.host_state.select(Some(i));
             }
+            KeyCode::PageDown => {
+                app.config_paragraph_offset += 1;
+            }
+            KeyCode::PageUp => {
+                app.config_paragraph_offset =
+                    (app.config_paragraph_offset as i64 - 1).max(0) as u16;
+            }
             KeyCode::Char('c') => {
                 app.config_display_mode = match app.config_display_mode {
                     ConfigDisplayMode::Global => ConfigDisplayMode::Selected,

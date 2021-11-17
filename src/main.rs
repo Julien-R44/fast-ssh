@@ -30,6 +30,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut app = App {
         selected_group: 0,
+        config_paragraph_offset: 0,
         groups: &scs.groups,
         host_state: ListState::default(),
         should_quit: false,
@@ -55,7 +56,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .constraints(
                     [
                         Constraint::Percentage(40),
+                        Constraint::Length(2),
                         Constraint::Percentage(40),
+                        Constraint::Length(2),
                         Constraint::Percentage(20),
                     ]
                     .as_ref(),
@@ -64,8 +67,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             render_group_tabs(&app, chunks[0], frame);
             render_host_list(&mut app, chunk_b[0], frame);
-            render_config(&mut app, chunk_b[1], frame);
-            render_shortcuts(&app, chunk_b[2], frame);
+            render_config(&mut app, chunk_b[2], frame);
+            render_shortcuts(&app, chunk_b[4], frame);
         })?;
 
         handle_inputs(&mut app)?;

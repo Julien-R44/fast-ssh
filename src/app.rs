@@ -14,6 +14,7 @@ pub struct App<'a> {
     pub config_display_mode: ConfigDisplayMode,
     pub should_quit: bool,
     pub should_spawn_ssh: bool,
+    pub config_paragraph_offset: u16,
 }
 
 impl App<'_> {

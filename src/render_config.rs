@@ -28,7 +28,7 @@ pub fn render_config(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBacke
         ConfigDisplayMode::Global => get_paragraph_for_global_mode(app, block),
     };
 
-    frame.render_widget(paragraph, area);
+    frame.render_widget(paragraph.scroll((app.config_paragraph_offset, 0)), area);
 }
 
 fn get_paragraph_for_global_mode<'a>(app: &'a App, block: Block<'a>) -> Paragraph<'a> {

@@ -24,6 +24,7 @@ pub fn render_shortcuts(_app: &App, area: Rect, frame: &mut Frame<CrosstermBacke
         Spans::from("'Enter': Validate"),
         Spans::from("'Tab': Change Group"),
         Spans::from("'c': Configuration Display Mode"),
+        Spans::from("'PageUp/Down': Scroll Configuration"),
         // Spans::from("'g' to alternate between groups mode"),
         Spans::from("'q': Exit"),
     ];
