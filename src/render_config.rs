@@ -42,7 +42,6 @@ fn get_paragraph_for_global_mode<'a>(app: &'a App, block: Block<'a>) -> Paragrap
 
         acc.extend(new_spans);
         acc
-        // .fold(vec![], |item| ssh_group_item_to_spans(item));
     });
 
     Paragraph::new(spans)
