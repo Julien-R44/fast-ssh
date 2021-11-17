@@ -28,3 +28,7 @@ Fast-SSH has a group system. This allows you to sort your servers, for example, 
 To make groups, it's simple, just define your `Host` as `Group/ServerName` ( see full configuration in above picture ). Now your groups will be displayed in FastSSH. You can now select a group and display only the servers defined in that group.
 
 Now all you have to do is launch Fast-SSH, select your service and press enter to connect.
+
+# Usage 
+Download the latest release for your platform [here](https://github.com/Julien-R44/cli-candlestick-chart/releases) and put in directory in your PATH.
+Then you can launch Fast-SSH with `fast-ssh`.
