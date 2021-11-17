@@ -24,7 +24,12 @@ impl App<'_> {
 
     pub fn get_selected_config(&self) -> Option<&SshGroupItem> {
         if let Some(host_state) = self.host_state.selected() {
-            Some(&self.get_selected_group().items[host_state])
+            let items_len = self.get_selected_group().items.len();
+            if host_state < items_len {
+                Some(&self.get_selected_group().items[host_state])
+            } else {
+                None
+            }
         } else {
             None
         }

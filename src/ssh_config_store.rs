@@ -76,6 +76,6 @@ impl SshConfigStore {
         });
 
         groups.reverse();
-        self.groups = groups;
+        self.groups = groups.into_iter().filter(|g| !g.items.is_empty()).collect();
     }
 }
