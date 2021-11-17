@@ -6,10 +6,10 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
     if let Event::Key(key) = event::read()? {
         match key.code {
             KeyCode::Tab => {
-                app.selected_group = (app.selected_group + 1) % app.groups.len();
+                app.selected_group = (app.selected_group + 1) % app.scs.groups.len();
             }
             KeyCode::Down => {
-                let items = &app.groups[app.selected_group].items;
+                let items = &app.scs.groups[app.selected_group].items;
                 let i = match app.host_state.selected() {
                     Some(i) => {
                         if i >= items.len() - 1 {
@@ -23,7 +23,7 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                 app.host_state.select(Some(i));
             }
             KeyCode::Up => {
-                let items = &app.groups[app.selected_group].items;
+                let items = &app.scs.groups[app.selected_group].items;
                 let i = match app.host_state.selected() {
                     Some(i) => {
                         if i == 0 {

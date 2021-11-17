@@ -2,10 +2,14 @@ use std::{error::Error, fmt::Debug};
 
 use ssh_cfg::{SshConfig, SshConfigParser, SshHostConfig};
 
+use crate::database::FileDatabase;
+
 #[derive(Debug)]
 pub struct SshGroupItem {
     pub name: String,
     pub full_name: String,
+    pub connection_count: i64,
+    pub last_used: i64,
     pub host_config: SshHostConfig,
 }
 
@@ -22,7 +26,7 @@ pub struct SshConfigStore {
 }
 
 impl SshConfigStore {
-    pub async fn new() -> Result<SshConfigStore, Box<dyn Error>> {
+    pub async fn new(db: &FileDatabase) -> Result<SshConfigStore, Box<dyn Error>> {
         let ssh_config = SshConfigParser::parse_home()
             .await
             .expect("Failed to parse ~/.ssh/config");
@@ -32,17 +36,19 @@ impl SshConfigStore {
             groups: Vec::new(),
         };
 
-        scs.create_ssh_groups();
+        scs.create_ssh_groups(db);
         Ok(scs)
     }
 
-    pub fn create_ssh_groups(&mut self) {
+    fn create_ssh_groups(&mut self, db: &FileDatabase) {
         let mut groups: Vec<SshGroup> = vec![SshGroup {
             name: "Others".to_string(),
             items: Vec::new(),
         }];
 
         self.config.iter().for_each(|(key, value)| {
+            let host_entry = db.get_host_values(key).unwrap();
+
             if key.contains('/') {
                 let group_name = key.split('/').next().unwrap();
                 let group_key = key.split('/').skip(1).collect::<Vec<&str>>().join("");
@@ -51,6 +57,8 @@ impl SshConfigStore {
 
                 let group_item = SshGroupItem {
                     name: group_key,
+                    connection_count: host_entry.connection_count,
+                    last_used: host_entry.last_used_date,
                     full_name: key.to_string(),
                     host_config: value.clone(),
                 };
@@ -72,6 +80,8 @@ impl SshConfigStore {
 
             groups[0].items.push(SshGroupItem {
                 full_name: key.to_string(),
+                connection_count: host_entry.connection_count,
+                last_used: host_entry.last_used_date,
                 name: key.to_string(),
                 host_config: value.clone(),
             });
