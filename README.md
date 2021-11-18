@@ -23,6 +23,7 @@
 
 # Documentation
 If you already have an SSH configuration file you don't have to add anything, Fast-SSH just parses this file and displays it. 
+If you don't have an SSH configuration file or if you don't know what it does, read this: https://linuxize.com/post/using-the-ssh-config-file/
 
 Fast-SSH has a group system. This allows you to sort your servers, for example, by project, mission or client.
 To make some groups, it's simple, just define your `Host` as `Group/ServerName` ( see full configuration in above picture ) and your groups will be displayed in FastSSH. You can now select a group and display only the servers defined in that group.
