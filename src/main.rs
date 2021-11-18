@@ -1,15 +1,12 @@
 use std::process::Command;
 
-use tui::{
-    layout::{Constraint, Direction, Layout},
-    style::{Color, Style},
-    text::Spans,
-    widgets::{Block, Borders, Paragraph},
-};
+use layout::create_layout;
+use tui::layout::{Constraint, Direction, Layout};
 
 mod app;
 mod database;
 mod input_handler;
+mod layout;
 mod render_group_tabs;
 mod render_shortcuts;
 mod searcher;
@@ -41,63 +38,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     loop {
         terminal.draw(|frame| {
-            let chunks = Layout::default()
-                .direction(Direction::Vertical)
-                .margin(1)
-                .horizontal_margin(4)
-                .constraints([Constraint::Length(3), Constraint::Percentage(90)].as_ref())
-                .split(frame.size());
-
-            let chunk_t = Layout::default()
-                .direction(Direction::Horizontal)
-                .margin(0)
-                .constraints(
-                    [
-                        Constraint::Percentage(80),
-                        Constraint::Length(2),
-                        Constraint::Length(10),
-                    ]
-                    .as_ref(),
-                )
-                .split(chunks[0]);
-
-            let constraints = match app.show_help {
-                false => {
-                    vec![
-                        Constraint::Percentage(50),
-                        Constraint::Length(2),
-                        Constraint::Percentage(50),
-                    ]
-                }
-                true => {
-                    vec![
-                        Constraint::Percentage(40),
-                        Constraint::Length(2),
-                        Constraint::Percentage(30),
-                        Constraint::Length(2),
-                        Constraint::Percentage(30),
-                    ]
-                }
-            };
-
-            let chunk_b = Layout::default()
-                .direction(Direction::Horizontal)
-                .margin(1)
-                .horizontal_margin(0)
-                .constraints(constraints.as_ref())
-                .split(chunks[1]);
+            let layout = create_layout(&app, frame);
 
             match app.state {
-                AppState::Normal => render_group_tabs(&app, chunk_t[0], frame),
-                AppState::Searching => app.searcher.render(&app, chunk_t[0], frame),
+                AppState::Normal => render_group_tabs(&app, layout.chunks_top[0], frame),
+                AppState::Searching => app.searcher.render(&app, layout.chunks_top[0], frame),
             };
 
-            HelpWidget::render(&mut app, chunk_t[2], frame);
-            HostsWidget::render(&mut app, chunk_b[0], frame);
-            ConfigWidget::render(&mut app, chunk_b[2], frame);
+            HelpWidget::render(&mut app, layout.chunks_top[2], frame);
+            HostsWidget::render(&mut app, layout.chunks_bot[0], frame);
+            ConfigWidget::render(&mut app, layout.chunks_bot[2], frame);
 
             if app.show_help {
-                render_shortcuts(&app, chunk_b[4], frame);
+                render_shortcuts(&app, layout.chunks_bot[4], frame);
             }
         })?;
 
