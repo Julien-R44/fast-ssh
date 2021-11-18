@@ -1,9 +1,10 @@
+use super::block;
+use crate::{app::App, ssh_config_store::SshGroupItem};
+use chrono::{DateTime, Utc};
 use std::{
     io::Stdout,
     time::{Duration, UNIX_EPOCH},
 };
-
-use chrono::{DateTime, Utc};
 use tui::{
     backend::CrosstermBackend,
     layout::{Constraint, Rect},
@@ -12,18 +13,10 @@ use tui::{
     Frame,
 };
 
-use crate::{app::App, ssh_config_store::SshGroupItem};
-
-use super::block;
-
 pub struct HostsWidget {}
 
 impl HostsWidget {
-    pub fn render_host_table(
-        app: &mut App,
-        area: Rect,
-        frame: &mut Frame<CrosstermBackend<Stdout>>,
-    ) {
+    pub fn render(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
         let block = block::new(" Hosts ");
         let selected_style = Style::default().fg(Color::Magenta);
 
