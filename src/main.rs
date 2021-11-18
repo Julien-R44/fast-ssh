@@ -10,20 +10,20 @@ use tui::{
 mod app;
 mod database;
 mod input_handler;
-mod render_config;
 mod render_group_tabs;
-mod render_host_table;
 mod render_shortcuts;
+mod searcher;
 mod ssh_config_store;
 mod term;
+mod widgets;
 
 use app::*;
 use input_handler::*;
-use render_config::*;
 use render_group_tabs::*;
-use render_host_table::*;
 use render_shortcuts::*;
+use searcher::*;
 use term::*;
+use widgets::{config_widget::ConfigWidget, help_widget::HelpWidget, hosts_widget::HostsWidget};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -87,23 +87,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .constraints(constraints.as_ref())
                 .split(chunks[1]);
 
-            let block = Block::default()
-                .borders(Borders::ALL)
-                .border_type(tui::widgets::BorderType::Rounded)
-                .border_style(Style::default().fg(Color::LightMagenta))
-                .title_alignment(tui::layout::Alignment::Center);
+            match app.state {
+                AppState::Normal => render_group_tabs(&app, chunk_t[0], frame),
+                AppState::Searching => app.searcher.render(&app, chunk_t[0], frame),
+            };
 
-            let help_span = Spans::from("'h' Show help");
-            frame.render_widget(
-                Paragraph::new(help_span)
-                    .block(block)
-                    .alignment(tui::layout::Alignment::Center),
-                chunk_t[2],
-            );
-
-            render_group_tabs(&app, chunk_t[0], frame);
-            render_host_table(&mut app, chunk_b[0], frame);
-            render_config(&mut app, chunk_b[2], frame);
+            HelpWidget::render(&mut app, chunk_t[2], frame);
+            HostsWidget::render(&mut app, chunk_b[0], frame);
+            ConfigWidget::render(&mut app, chunk_b[2], frame);
 
             if app.show_help {
                 render_shortcuts(&app, chunk_b[4], frame);
