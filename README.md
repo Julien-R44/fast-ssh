@@ -4,8 +4,8 @@
     <b>Connect quickly to your services 🚀</b>
     <br/>
     <br/>
-    <a href="https://github.com/Julien-R44/cli-candlestick-chart/actions/workflows/release.yml">
-        <img src="https://github.com/Julien-R44/cli-candlestick-chart/actions/workflows/release.yml/badge.svg" />
+    <a href="https://github.com/Julien-R44/fash-ssh/actions/workflows/release.yml">
+        <img src="https://github.com/Julien-R44/fast-ssh/actions/workflows/release.yml/badge.svg" />
     </a>
     <a href="https://crates.io/crates/fast-ssh">
         <img src="https://img.shields.io/crates/v/fast-ssh.svg" />
@@ -35,7 +35,7 @@ A file database is stored at ~/.fastssh/db.ron. This file is automatically creat
 This database is used to store the number of connections to a service and the date of last connection.
 
 # Installation
-Download the latest release for your platform [here](https://github.com/Julien-R44/cli-candlestick-chart/releases) and put in directory in your PATH. ( Packages managers coming soon )
+Download the latest release for your platform [here](https://github.com/Julien-R44/fast-ssh/releases) and put in directory in your PATH. ( Packages managers coming soon )
 
 If you use cargo you can run `cargo install fast-ssh`
 
