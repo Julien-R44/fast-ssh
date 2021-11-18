@@ -3,6 +3,7 @@ use tui::widgets::TableState;
 
 use crate::{
     database::FileDatabase,
+    searcher::Searcher,
     ssh_config_store::{SshConfigStore, SshGroup, SshGroupItem},
 };
 
@@ -11,7 +12,14 @@ pub enum ConfigDisplayMode {
     Selected,
 }
 
+pub enum AppState {
+    Searching,
+    Normal,
+}
+
 pub struct App {
+    pub state: AppState,
+    pub searcher: Searcher,
     pub selected_group: usize,
     pub host_state: TableState,
     pub scs: SshConfigStore,
@@ -29,6 +37,7 @@ impl App {
         let scs = SshConfigStore::new(&db).await?;
 
         Ok(App {
+            state: AppState::Normal,
             selected_group: 0,
             config_paragraph_offset: 0,
             scs,
@@ -37,6 +46,7 @@ impl App {
             should_spawn_ssh: false,
             config_display_mode: ConfigDisplayMode::Selected,
             db,
+            searcher: Searcher::new(),
             show_help: false,
         })
     }
@@ -68,5 +78,35 @@ impl App {
         } else {
             None
         }
+    }
+
+    pub fn change_selected_group(&mut self) {
+        self.selected_group = (self.selected_group + 1) % self.scs.groups.len();
+    }
+
+    pub fn change_selected_item(&mut self, rot_right: bool) {
+        let items_len = self.get_selected_group().items.len();
+        let i = match self.host_state.selected() {
+            Some(i) => {
+                if rot_right {
+                    (i + 1) % items_len
+                } else {
+                    (i + items_len - 1) % items_len
+                }
+            }
+            None => 0,
+        };
+        self.host_state.select(Some(i));
+    }
+
+    pub fn scroll_config_paragraph(&mut self, offset: i64) {
+        self.config_paragraph_offset = (self.config_paragraph_offset as i64 + offset).max(0) as u16;
+    }
+
+    pub fn toggle_config_display_mode(&mut self) {
+        self.config_display_mode = match self.config_display_mode {
+            ConfigDisplayMode::Global => ConfigDisplayMode::Selected,
+            ConfigDisplayMode::Selected => ConfigDisplayMode::Global,
+        };
     }
 }
