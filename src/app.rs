@@ -20,6 +20,7 @@ pub struct App {
     pub should_spawn_ssh: bool,
     pub config_paragraph_offset: u16,
     pub db: FileDatabase,
+    pub show_help: bool,
 }
 
 impl App {
@@ -36,6 +37,7 @@ impl App {
             should_spawn_ssh: false,
             config_display_mode: ConfigDisplayMode::Selected,
             db,
+            show_help: false,
         })
     }
 

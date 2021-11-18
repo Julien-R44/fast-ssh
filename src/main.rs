@@ -1,6 +1,11 @@
 use std::process::Command;
 
-use tui::layout::{Constraint, Direction, Layout};
+use tui::{
+    layout::{Constraint, Direction, Layout},
+    style::{Color, Style},
+    text::Spans,
+    widgets::{Block, Borders, Paragraph},
+};
 
 mod app;
 mod database;
@@ -43,26 +48,66 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .constraints([Constraint::Length(3), Constraint::Percentage(90)].as_ref())
                 .split(frame.size());
 
-            let chunk_b = Layout::default()
+            let chunk_t = Layout::default()
                 .direction(Direction::Horizontal)
-                .margin(1)
-                .horizontal_margin(0)
+                .margin(0)
                 .constraints(
                     [
+                        Constraint::Percentage(80),
+                        Constraint::Length(2),
+                        Constraint::Length(10),
+                    ]
+                    .as_ref(),
+                )
+                .split(chunks[0]);
+
+            let constraints = match app.show_help {
+                false => {
+                    vec![
+                        Constraint::Percentage(50),
+                        Constraint::Length(2),
+                        Constraint::Percentage(50),
+                    ]
+                }
+                true => {
+                    vec![
                         Constraint::Percentage(40),
                         Constraint::Length(2),
                         Constraint::Percentage(30),
                         Constraint::Length(2),
                         Constraint::Percentage(30),
                     ]
-                    .as_ref(),
-                )
+                }
+            };
+
+            let chunk_b = Layout::default()
+                .direction(Direction::Horizontal)
+                .margin(1)
+                .horizontal_margin(0)
+                .constraints(constraints.as_ref())
                 .split(chunks[1]);
 
-            render_group_tabs(&app, chunks[0], frame);
+            let block = Block::default()
+                .borders(Borders::ALL)
+                .border_type(tui::widgets::BorderType::Rounded)
+                .border_style(Style::default().fg(Color::LightMagenta))
+                .title_alignment(tui::layout::Alignment::Center);
+
+            let help_span = Spans::from("'h' Show help");
+            frame.render_widget(
+                Paragraph::new(help_span)
+                    .block(block)
+                    .alignment(tui::layout::Alignment::Center),
+                chunk_t[2],
+            );
+
+            render_group_tabs(&app, chunk_t[0], frame);
             render_host_table(&mut app, chunk_b[0], frame);
             render_config(&mut app, chunk_b[2], frame);
-            render_shortcuts(&app, chunk_b[4], frame);
+
+            if app.show_help {
+                render_shortcuts(&app, chunk_b[4], frame);
+            }
         })?;
 
         handle_inputs(&mut app)?;

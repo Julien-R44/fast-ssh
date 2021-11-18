@@ -49,6 +49,9 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
                     ConfigDisplayMode::Selected => ConfigDisplayMode::Global,
                 };
             }
+            KeyCode::Char('h') => {
+                app.show_help = !app.show_help;
+            }
             KeyCode::Char('q') => app.should_quit = true,
             KeyCode::Enter => app.should_spawn_ssh = true,
             _ => {}
