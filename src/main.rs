@@ -1,14 +1,10 @@
-use std::process::Command;
-
 use layout::create_layout;
-use tui::layout::{Constraint, Direction, Layout};
+use std::process::Command;
 
 mod app;
 mod database;
 mod input_handler;
 mod layout;
-mod render_group_tabs;
-mod render_shortcuts;
 mod searcher;
 mod ssh_config_store;
 mod term;
@@ -16,11 +12,12 @@ mod widgets;
 
 use app::*;
 use input_handler::*;
-use render_group_tabs::*;
-use render_shortcuts::*;
 use searcher::*;
 use term::*;
-use widgets::{config_widget::ConfigWidget, help_widget::HelpWidget, hosts_widget::HostsWidget};
+use widgets::{
+    config_widget::ConfigWidget, groups_widget::GroupsWidget, help_widget::HelpWidget,
+    hosts_widget::HostsWidget, shortcuts_widget::ShortcutsWidget,
+};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -41,7 +38,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let layout = create_layout(&app, frame);
 
             match app.state {
-                AppState::Normal => render_group_tabs(&app, layout.chunks_top[0], frame),
+                AppState::Normal => GroupsWidget::render(&app, layout.chunks_top[0], frame),
                 AppState::Searching => app.searcher.render(&app, layout.chunks_top[0], frame),
             };
 
@@ -50,7 +47,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             ConfigWidget::render(&mut app, layout.chunks_bot[2], frame);
 
             if app.show_help {
-                render_shortcuts(&app, layout.chunks_bot[4], frame);
+                ShortcutsWidget::render(&app, layout.chunks_bot[4], frame);
             }
         })?;
 

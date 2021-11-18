@@ -1,5 +1,5 @@
+use crate::app::App;
 use std::io::Stdout;
-
 use tui::{
     backend::CrosstermBackend,
     layout::Rect,
@@ -8,8 +8,6 @@ use tui::{
     widgets::{Block, Borders, Paragraph},
     Frame,
 };
-
-use crate::app::App;
 
 pub struct HelpWidget {}
 
