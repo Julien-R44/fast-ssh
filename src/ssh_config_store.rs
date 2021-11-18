@@ -1,8 +1,6 @@
-use std::{error::Error, fmt::Debug};
-
-use ssh_cfg2::{SshConfig, SshConfigParser, SshHostConfig};
-
 use crate::database::FileDatabase;
+use ssh_cfg::{SshConfig, SshConfigParser, SshHostConfig};
+use std::fmt::Debug;
 
 #[derive(Debug)]
 pub struct SshGroupItem {
@@ -26,10 +24,13 @@ pub struct SshConfigStore {
 }
 
 impl SshConfigStore {
-    pub async fn new(db: &FileDatabase) -> Result<SshConfigStore, Box<dyn Error>> {
-        let ssh_config = SshConfigParser::parse_home()
-            .await
-            .expect("Failed to parse ~/.ssh/config");
+    pub async fn new(db: &FileDatabase) -> Result<SshConfigStore, ssh_cfg::Error> {
+        let ssh_config = match SshConfigParser::parse_home().await {
+            Ok(ssh_config) => ssh_config,
+            Err(e) => {
+                return Err(e);
+            }
+        };
 
         let mut scs = SshConfigStore {
             config: ssh_config,

@@ -22,8 +22,15 @@ use term::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut app = match App::new().await {
+        Ok(app) => app,
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            std::process::exit(1);
+        }
+    };
+
     let mut terminal = init_terminal()?;
-    let mut app = App::new().await?;
 
     app.host_state.select(Some(0));
 
