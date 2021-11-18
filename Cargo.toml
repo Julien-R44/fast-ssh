@@ -14,7 +14,7 @@ edition = "2021"
 [dependencies]
 tui = { version = "0.16", default-features = false, features = ['crossterm'] }
 crossterm = "0.22.1"
-ssh_cfg2 = "0.1.1"
+ssh_cfg = "0.2"
 futures = "0.3"
 tokio = { version = "1", features = ["full"] }
 rustbreak = { version = "2.0.0", features = ["ron_enc"] }

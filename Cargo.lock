@@ -218,7 +218,7 @@ dependencies = [
  "futures",
  "rustbreak",
  "serde",
- "ssh_cfg2",
+ "ssh_cfg",
  "tokio",
  "tui",
 ]
@@ -730,13 +730,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ecab6c735a6bb4139c0caafd0cc3635748bbb3acf4550e8138122099251f309"
 
 [[package]]
-name = "ssh_cfg2"
-version = "0.1.1"
+name = "ssh_cfg"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "542dca47c184cb3660db40a552914771dc5dec753658a163470543cdb71d9300"
+checksum = "7df30390ca2bb50ef601a303bbb1134d777229f1565b2a7166b862253b17da90"
 dependencies = [
  "async-fs",
- "dirs 3.0.2",
+ "dirs 4.0.0",
  "indexmap",
  "plain_path",
 ]
