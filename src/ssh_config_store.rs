@@ -25,12 +25,7 @@ pub struct SshConfigStore {
 
 impl SshConfigStore {
     pub async fn new(db: &FileDatabase) -> Result<SshConfigStore, ssh_cfg::Error> {
-        let ssh_config = match SshConfigParser::parse_home().await {
-            Ok(ssh_config) => ssh_config,
-            Err(e) => {
-                return Err(e);
-            }
-        };
+        let ssh_config = SshConfigParser::parse_home().await?;
 
         let mut scs = SshConfigStore {
             config: ssh_config,
