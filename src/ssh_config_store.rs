@@ -1,6 +1,6 @@
 use std::{error::Error, fmt::Debug};
 
-use ssh_cfg::{SshConfig, SshConfigParser, SshHostConfig};
+use ssh_cfg2::{SshConfig, SshConfigParser, SshHostConfig};
 
 use crate::database::FileDatabase;
 
