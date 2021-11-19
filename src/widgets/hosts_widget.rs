@@ -25,16 +25,7 @@ impl HostsWidget {
 
         let header = HostsWidget::create_header();
 
-        let items: Vec<&SshGroupItem> = match app.state {
-            AppState::Normal => app
-                .get_selected_group()
-                .items
-                .iter()
-                .collect::<Vec<&SshGroupItem>>(),
-            AppState::Searching => app.searcher.get_filtered_items(app),
-        };
-
-        let rows = HostsWidget::create_rows_from_items(&items);
+        let rows = HostsWidget::create_rows_from_items(&app.get_items_based_on_mode());
 
         let t = Table::new(rows)
             .header(header)

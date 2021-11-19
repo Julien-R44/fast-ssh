@@ -1,5 +1,6 @@
+use crate::{app::App, ssh_config_store::SshGroupItem};
 use std::io::Stdout;
-
+use sublime_fuzzy::best_match;
 use tui::{
     backend::CrosstermBackend,
     layout::Rect,
@@ -8,8 +9,6 @@ use tui::{
     widgets::{Block, Borders, Paragraph},
     Frame,
 };
-
-use crate::{app::App, ssh_config_store::SshGroupItem};
 
 pub struct Searcher {
     search_string: String,
@@ -25,9 +24,13 @@ impl Searcher {
     }
 
     pub fn get_filtered_items<'a>(&self, app: &'a App) -> Vec<&'a SshGroupItem> {
+        if self.search_string.is_empty() {
+            return app.get_all_items();
+        }
+
         app.get_all_items()
             .into_iter()
-            .filter(|item| (**item).full_name.contains(&self.search_string))
+            .filter(|item| best_match(&self.search_string, &item.full_name).is_some())
             .collect::<Vec<&SshGroupItem>>()
     }
 

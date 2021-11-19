@@ -89,12 +89,25 @@ impl App {
             .collect::<Vec<&SshGroupItem>>()
     }
 
+    pub fn get_items_based_on_mode(&self) -> Vec<&SshGroupItem> {
+        let items: Vec<&SshGroupItem> = match self.state {
+            AppState::Normal => self
+                .get_selected_group()
+                .items
+                .iter()
+                .collect::<Vec<&SshGroupItem>>(),
+            AppState::Searching => self.searcher.get_filtered_items(self),
+        };
+
+        items
+    }
+
     pub fn change_selected_group(&mut self) {
         self.selected_group = (self.selected_group + 1) % self.scs.groups.len();
     }
 
     pub fn change_selected_item(&mut self, rot_right: bool) {
-        let items_len = self.get_selected_group().items.len();
+        let items_len = self.get_items_based_on_mode().len();
         let i = match self.host_state.selected() {
             Some(i) => {
                 if rot_right {
