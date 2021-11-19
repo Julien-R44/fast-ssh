@@ -80,6 +80,15 @@ impl App {
         }
     }
 
+    pub fn get_all_items(&self) -> Vec<&SshGroupItem> {
+        self.scs
+            .groups
+            .iter()
+            .map(|group| &group.items)
+            .flatten()
+            .collect::<Vec<&SshGroupItem>>()
+    }
+
     pub fn change_selected_group(&mut self) {
         self.selected_group = (self.selected_group + 1) % self.scs.groups.len();
     }

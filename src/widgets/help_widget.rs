@@ -12,7 +12,7 @@ use tui::{
 pub struct HelpWidget {}
 
 impl HelpWidget {
-    pub fn render(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
+    pub fn render(_app: &mut App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
         let block = Block::default()
             .borders(Borders::ALL)
             .border_type(tui::widgets::BorderType::Rounded)

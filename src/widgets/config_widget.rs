@@ -29,17 +29,12 @@ impl ConfigWidget {
     }
 
     fn get_paragraph_for_global_mode<'a>(app: &'a App, block: Block<'a>) -> Paragraph<'a> {
-        let spans: Vec<Spans> = app.scs.groups.iter().fold(vec![], |mut acc, group| {
-            let new_spans: Vec<Spans> = group
-                .items
-                .iter()
-                .map(|item| ConfigWidget::ssh_group_item_to_spans(item))
-                .flatten()
-                .collect();
-
-            acc.extend(new_spans);
-            acc
-        });
+        let spans: Vec<Spans> = app
+            .get_all_items()
+            .iter()
+            .map(|item| ConfigWidget::ssh_group_item_to_spans(item))
+            .flatten()
+            .collect();
 
         Paragraph::new(spans)
             .block(block)

@@ -1,5 +1,8 @@
 use super::block;
-use crate::{app::App, ssh_config_store::SshGroupItem};
+use crate::{
+    app::{App, AppState},
+    ssh_config_store::SshGroupItem,
+};
 use chrono::{DateTime, Utc};
 use std::{
     io::Stdout,
@@ -21,7 +24,17 @@ impl HostsWidget {
         let selected_style = Style::default().fg(Color::Magenta);
 
         let header = HostsWidget::create_header();
-        let rows = HostsWidget::create_rows_from_items(&app.get_selected_group().items);
+
+        let items: Vec<&SshGroupItem> = match app.state {
+            AppState::Normal => app
+                .get_selected_group()
+                .items
+                .iter()
+                .collect::<Vec<&SshGroupItem>>(),
+            AppState::Searching => app.searcher.get_filtered_items(app),
+        };
+
+        let rows = HostsWidget::create_rows_from_items(&items);
 
         let t = Table::new(rows)
             .header(header)
@@ -48,7 +61,7 @@ impl HostsWidget {
             .bottom_margin(1)
     }
 
-    fn create_rows_from_items(items: &[SshGroupItem]) -> Vec<Row<'static>> {
+    fn create_rows_from_items(items: &Vec<&SshGroupItem>) -> Vec<Row<'static>> {
         let style = Style::default();
         items
             .iter()
