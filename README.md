@@ -34,6 +34,24 @@ Now all you have to do is launch Fast-SSH, select your service and press enter t
 A file database is stored at ~/.fastssh/db.ron. This file is automatically created when you launch Fast-SSH. 
 This database is used to store the number of connections to a service and the date of last connection.
 
+## Search Mode
+Fast-SSH implements a search mode ( fuzzy ) that allows you to type to find one of your hosts. To use it, press `s`, start typing, finish your selection with the arrow keys then press enter once the host is selected to make the SSH connection. Press ESC if you wish to leave the search mode and return to the "groups" mode.
+
+## Shortcuts
+| Key           | Action                               |
+| ------------- | -------------                        |
+| h             | Display Shortcuts Panel              |
+| Enter         | Validate selection : Execute SSH cmd |
+| Tab           | Switch group                         |
+| Up/Down       | Navigate through your hosts          |
+| c             | Switch Config display mode           |
+| PageUp/Down   | Scroll Configuration                 |
+| s             | Enable Search Mode                   |
+| Esc           | Exit Search Mode                     |
+| q             | Exit Fast-SSH                        |
+
+
+
 # Installation
 Download the latest release for your platform [here](https://github.com/Julien-R44/fast-ssh/releases) and put in directory in your PATH. ( Packages managers coming soon )
 
