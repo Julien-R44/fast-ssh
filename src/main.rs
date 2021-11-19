@@ -12,7 +12,6 @@ mod widgets;
 
 use app::*;
 use input_handler::*;
-use searcher::*;
 use term::*;
 use widgets::{
     config_widget::ConfigWidget, groups_widget::GroupsWidget, help_widget::HelpWidget,

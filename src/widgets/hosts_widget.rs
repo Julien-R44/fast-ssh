@@ -1,8 +1,5 @@
 use super::block;
-use crate::{
-    app::{App, AppState},
-    ssh_config_store::SshGroupItem,
-};
+use crate::{app::App, ssh_config_store::SshGroupItem};
 use chrono::{DateTime, Utc};
 use std::{
     io::Stdout,
@@ -52,7 +49,7 @@ impl HostsWidget {
             .bottom_margin(1)
     }
 
-    fn create_rows_from_items(items: &Vec<&SshGroupItem>) -> Vec<Row<'static>> {
+    fn create_rows_from_items(items: &[&SshGroupItem]) -> Vec<Row<'static>> {
         let style = Style::default();
         items
             .iter()
