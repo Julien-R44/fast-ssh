@@ -31,7 +31,9 @@ To make some groups, it's simple, just define your `Host` as `Group/ServerName` 
 Now all you have to do is launch Fast-SSH, select your service and press enter to connect.
 
 ## File Database
-A file database is stored at ~/.fastssh/db.ron. This file is automatically created when you launch Fast-SSH. 
+A file database is stored at `$XDG_CONFIG_HOME/FastSSH/db.ron` ( `%APPDATA%/FastSSH/db.ron` for Windows ). 
+
+This file is automatically created when you launch Fast-SSH. 
 This database is used to store the number of connections to a service and the date of last connection.
 
 ## Search Mode
@@ -42,7 +44,7 @@ Fast-SSH implements a search mode ( fuzzy ) that allows you to type to find one 
 | ------------- | -------------                        |
 | h             | Display Shortcuts Panel              |
 | Enter         | Validate selection : Execute SSH cmd |
-| Tab           | Switch group                         |
+| Tab/Left/Right| Navigate through your groups         |
 | Up/Down       | Navigate through your hosts          |
 | c             | Switch Config display mode           |
 | PageUp/Down   | Scroll Configuration                 |
@@ -51,6 +53,10 @@ Fast-SSH implements a search mode ( fuzzy ) that allows you to type to find one 
 | q             | Exit Fast-SSH                        |
 
 
+## Configuration
+Fast-SSH has a few configuration options. You can find the configuration in :
+- Unix : `$XDG_CONFIG_HOME/FastSSH/config.yaml`
+- Windows : `%APPDATA%/FastSSH/config.yaml`
 
 # Installation
 Download the latest release for your platform [here](https://github.com/Julien-R44/fast-ssh/releases) and put in directory in your PATH. ( Packages managers coming soon )
@@ -59,7 +65,7 @@ If you use cargo you can run `cargo install fast-ssh`
 
 Then you can launch Fast-SSH with `fast-ssh`. 
 
-# Known Issues
+# Known issues
 If you are a user of the new Windows terminal and you encounter raw AINSI escape sequences when you run fast-ssh, you must unset the TERM environment variable before running the application. Read more about this here : https://github.com/crossterm-rs/crossterm/issues/580
 
 Best solution would be to create an alias like this : 
