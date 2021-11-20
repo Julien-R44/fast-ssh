@@ -58,6 +58,15 @@ Fast-SSH has a few configuration options. You can find the configuration in :
 - Unix : `$XDG_CONFIG_HOME/FastSSH/config.yaml`
 - Windows : `%APPDATA%/FastSSH/config.yaml`
 
+```
+# This is the default configuration for FastSSH.
+
+theme:
+    text_primary: "#b967ff"
+    text_secondary: "#ffffff"
+    border_color: "#b967ff"
+```
+
 # Installation
 Download the latest release for your platform [here](https://github.com/Julien-R44/fast-ssh/releases) and put in directory in your PATH. ( Packages managers coming soon )
 

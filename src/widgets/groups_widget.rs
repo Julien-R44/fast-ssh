@@ -19,7 +19,7 @@ impl GroupsWidget {
             .map(|t| {
                 Spans::from(Span::styled(
                     t.name.to_string(),
-                    Style::default().fg(THEME.secondary_color),
+                    Style::default().fg(THEME.text_secondary()),
                 ))
             })
             .collect();
@@ -30,7 +30,7 @@ impl GroupsWidget {
             .highlight_style(
                 Style::default()
                     .add_modifier(Modifier::BOLD)
-                    .bg(THEME.primary_color),
+                    .bg(THEME.text_primary()),
             );
 
         frame.render_widget(tabs, area);

@@ -24,8 +24,8 @@ impl HostsWidget {
         let t = Table::new(rows)
             .header(header)
             .block(block)
-            .highlight_style(Style::default().fg(THEME.primary_color))
-            .style(Style::default().fg(THEME.secondary_color))
+            .highlight_style(Style::default().fg(THEME.text_primary()))
+            .style(Style::default().fg(THEME.text_secondary()))
             .highlight_symbol(">> ")
             .widths(&[
                 Constraint::Percentage(30),
@@ -39,7 +39,7 @@ impl HostsWidget {
     fn create_header() -> Row<'static> {
         let header_cells = ["Host", "Last Used", "Nb Connection"]
             .iter()
-            .map(|h| Cell::from(*h).style(Style::default().fg(THEME.secondary_color)));
+            .map(|h| Cell::from(*h).style(Style::default().fg(THEME.text_secondary())));
 
         Row::new(header_cells)
             .style(Style::default())

@@ -10,12 +10,14 @@ mod layout;
 mod searcher;
 mod ssh_config_store;
 mod term;
+mod theme;
 mod widgets;
 
 use app::*;
 use config::*;
 use input_handler::*;
 use term::*;
+use theme::*;
 use widgets::{
     config_widget::ConfigWidget, groups_widget::GroupsWidget, help_widget::HelpWidget,
     hosts_widget::HostsWidget, shortcuts_widget::ShortcutsWidget,

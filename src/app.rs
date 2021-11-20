@@ -56,15 +56,15 @@ impl App {
     }
 
     pub fn create_or_get_db_file() -> Result<FileDatabase, Box<dyn std::error::Error>> {
-        if let Some(home) = dirs::config_dir() {
-            let conf_path = home.join("FastSSH");
+        if let Some(config_dir) = dirs::config_dir() {
+            let conf_path = config_dir.join("FastSSH");
             let db_path = conf_path.join("db.ron");
 
             fs::create_dir_all(&conf_path)?;
             return FileDatabase::new(db_path.to_str().unwrap());
         }
 
-        Err("Could not find home directory".into())
+        Err("Could not find configuration directory".into())
     }
 
     pub fn get_selected_group(&self) -> &SshGroup {
