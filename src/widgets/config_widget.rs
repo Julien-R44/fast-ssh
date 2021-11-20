@@ -49,7 +49,7 @@ impl ConfigWidget {
                 .add_modifier(Modifier::BOLD),
         ))];
 
-        let config = &app.get_selected_config();
+        let config = &app.get_selected_item();
 
         if let Some(config) = config {
             spans = ConfigWidget::ssh_group_item_to_spans(config);

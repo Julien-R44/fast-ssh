@@ -37,15 +37,11 @@ impl Searcher {
     pub fn add_char(&mut self, c: char) {
         self.search_string.push(c);
         self.has_user_input = true;
-        self.search();
     }
 
     pub fn del_char(&mut self) {
         self.search_string.pop();
-        self.search();
     }
-
-    fn search(&self) {}
 
     pub fn render(&self, _app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
         let block = Block::default()

@@ -67,11 +67,11 @@ impl App {
         &self.scs.groups[self.selected_group]
     }
 
-    pub fn get_selected_config(&self) -> Option<&SshGroupItem> {
+    pub fn get_selected_item(&self) -> Option<&SshGroupItem> {
         if let Some(host_state) = self.host_state.selected() {
-            let items_len = self.get_selected_group().items.len();
+            let items_len = self.get_items_based_on_mode().len();
             if host_state < items_len {
-                Some(&self.get_selected_group().items[host_state])
+                Some(self.get_items_based_on_mode()[host_state])
             } else {
                 None
             }

@@ -60,7 +60,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     restore_terminal(&mut terminal)?;
 
     if app.should_spawn_ssh {
-        let selected_config = app.get_selected_config().unwrap();
+        let selected_config = app.get_selected_item().unwrap();
         let host_name = &selected_config.full_name;
 
         app.db.save_host_values(
