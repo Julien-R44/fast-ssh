@@ -120,6 +120,11 @@ impl App {
 
     pub fn change_selected_item(&mut self, rot_right: bool) {
         let items_len = self.get_items_based_on_mode().len();
+
+        if items_len == 0 {
+            return;
+        }
+
         let i = match self.host_state.selected() {
             Some(i) => {
                 if rot_right {
