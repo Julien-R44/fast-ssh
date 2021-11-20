@@ -44,7 +44,8 @@ Fast-SSH implements a search mode ( fuzzy ) that allows you to type to find one 
 | ------------- | -------------                        |
 | h             | Display Shortcuts Panel              |
 | Enter         | Validate selection : Execute SSH cmd |
-| Tab/Left/Right| Navigate through your groups         |
+| Tab/BackTab   | Navigate through your groups         |
+| Left/Right    | Navigate through your groups         |
 | Up/Down       | Navigate through your hosts          |
 | c             | Switch Config display mode           |
 | PageUp/Down   | Scroll Configuration                 |

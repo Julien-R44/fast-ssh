@@ -11,6 +11,7 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
 
         match key.code {
             KeyCode::Tab => app.change_selected_group(true),
+            KeyCode::BackTab => app.change_selected_group(false),
             KeyCode::Left => app.change_selected_group(false),
             KeyCode::Right => app.change_selected_group(true),
             KeyCode::Down => app.change_selected_item(true),
