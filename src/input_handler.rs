@@ -10,7 +10,9 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
         };
 
         match key.code {
-            KeyCode::Tab => app.change_selected_group(),
+            KeyCode::Tab => app.change_selected_group(true),
+            KeyCode::Left => app.change_selected_group(false),
+            KeyCode::Right => app.change_selected_group(true),
             KeyCode::Down => app.change_selected_item(true),
             KeyCode::Up => app.change_selected_item(false),
             KeyCode::PageDown => app.scroll_config_paragraph(1),

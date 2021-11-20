@@ -106,8 +106,14 @@ impl App {
         items
     }
 
-    pub fn change_selected_group(&mut self) {
-        self.selected_group = (self.selected_group + 1) % self.scs.groups.len();
+    pub fn change_selected_group(&mut self, rot_right: bool) {
+        let actual_idx = self.selected_group;
+        let items_len = self.scs.groups.len();
+
+        self.selected_group = match rot_right {
+            true => (actual_idx + 1) % items_len,
+            false => (actual_idx + items_len - 1) % items_len,
+        };
     }
 
     pub fn change_selected_item(&mut self, rot_right: bool) {
