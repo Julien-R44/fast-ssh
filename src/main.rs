@@ -1,7 +1,9 @@
 use layout::create_layout;
+use lazy_static::lazy_static;
 use std::process::Command;
 
 mod app;
+mod config;
 mod database;
 mod input_handler;
 mod layout;
@@ -11,12 +13,18 @@ mod term;
 mod widgets;
 
 use app::*;
+use config::*;
 use input_handler::*;
 use term::*;
 use widgets::{
     config_widget::ConfigWidget, groups_widget::GroupsWidget, help_widget::HelpWidget,
     hosts_widget::HostsWidget, shortcuts_widget::ShortcutsWidget,
 };
+
+lazy_static! {
+    pub static ref CONFIG: Config = resolve_config();
+    pub static ref THEME: &'static Theme = &CONFIG.theme;
+}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

@@ -1,4 +1,4 @@
-use crate::{app::App, ssh_config_store::SshGroupItem};
+use crate::{app::App, ssh_config_store::SshGroupItem, THEME};
 use std::io::Stdout;
 use sublime_fuzzy::best_match;
 use tui::{
@@ -46,13 +46,16 @@ impl Searcher {
     pub fn render(&self, _app: &App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
         let block = Block::default()
             .borders(Borders::ALL)
-            .border_style(Style::default().fg(Color::LightMagenta))
+            .border_style(Style::default().fg(THEME.primary_color))
             .title_alignment(tui::layout::Alignment::Center)
             .border_type(tui::widgets::BorderType::Rounded)
-            .title(Span::styled(" Search ", Style::default().fg(Color::White)));
+            .title(Span::styled(
+                " Search ",
+                Style::default().fg(THEME.secondary_color),
+            ));
 
         let spans = Spans::from(vec![
-            Span::styled(" > ", Style::default().fg(Color::Magenta)),
+            Span::styled(" > ", Style::default().fg(THEME.primary_color)),
             Span::styled(
                 &self.search_string,
                 Style::default().add_modifier(Modifier::BOLD),

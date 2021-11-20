@@ -1,5 +1,5 @@
 use super::block;
-use crate::{app::App, ssh_config_store::SshGroupItem};
+use crate::{app::App, ssh_config_store::SshGroupItem, THEME};
 use chrono::{DateTime, Utc};
 use std::{
     io::Stdout,
@@ -8,7 +8,7 @@ use std::{
 use tui::{
     backend::CrosstermBackend,
     layout::{Constraint, Rect},
-    style::{Color, Style},
+    style::Style,
     widgets::{Cell, Row, Table},
     Frame,
 };
@@ -18,16 +18,14 @@ pub struct HostsWidget {}
 impl HostsWidget {
     pub fn render(app: &mut App, area: Rect, frame: &mut Frame<CrosstermBackend<Stdout>>) {
         let block = block::new(" Hosts ");
-        let selected_style = Style::default().fg(Color::Magenta);
-
         let header = HostsWidget::create_header();
-
         let rows = HostsWidget::create_rows_from_items(&app.get_items_based_on_mode());
 
         let t = Table::new(rows)
             .header(header)
             .block(block)
-            .highlight_style(selected_style)
+            .highlight_style(Style::default().fg(THEME.primary_color))
+            .style(Style::default().fg(THEME.secondary_color))
             .highlight_symbol(">> ")
             .widths(&[
                 Constraint::Percentage(30),
@@ -41,7 +39,7 @@ impl HostsWidget {
     fn create_header() -> Row<'static> {
         let header_cells = ["Host", "Last Used", "Nb Connection"]
             .iter()
-            .map(|h| Cell::from(*h).style(Style::default().fg(Color::White)));
+            .map(|h| Cell::from(*h).style(Style::default().fg(THEME.secondary_color)));
 
         Row::new(header_cells)
             .style(Style::default())

@@ -1,8 +1,8 @@
 use super::block;
-use crate::App;
+use crate::{App, THEME};
 use std::io::Stdout;
 use tui::layout::Rect;
-use tui::style::{Color, Modifier, Style};
+use tui::style::{Modifier, Style};
 use tui::text::{Span, Spans};
 use tui::widgets::Tabs;
 use tui::{backend::CrosstermBackend, Frame};
@@ -19,7 +19,7 @@ impl GroupsWidget {
             .map(|t| {
                 Spans::from(Span::styled(
                     t.name.to_string(),
-                    Style::default().fg(Color::White),
+                    Style::default().fg(THEME.secondary_color),
                 ))
             })
             .collect();
@@ -30,7 +30,7 @@ impl GroupsWidget {
             .highlight_style(
                 Style::default()
                     .add_modifier(Modifier::BOLD)
-                    .bg(Color::Magenta),
+                    .bg(THEME.primary_color),
             );
 
         frame.render_widget(tabs, area);

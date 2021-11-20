@@ -2,6 +2,7 @@ use std::fs;
 use tui::widgets::TableState;
 
 use crate::{
+    config::{resolve_config, Config},
     database::FileDatabase,
     searcher::Searcher,
     ssh_config_store::{SshConfigStore, SshGroup, SshGroupItem},
@@ -29,12 +30,14 @@ pub struct App {
     pub config_paragraph_offset: u16,
     pub db: FileDatabase,
     pub show_help: bool,
+    pub config: Config,
 }
 
 impl App {
     pub async fn new() -> Result<App, Box<dyn std::error::Error>> {
         let db = App::create_or_get_db_file()?;
         let scs = SshConfigStore::new(&db).await?;
+        let config = resolve_config();
 
         Ok(App {
             state: AppState::Normal,
@@ -48,6 +51,7 @@ impl App {
             db,
             searcher: Searcher::new(),
             show_help: false,
+            config,
         })
     }
 

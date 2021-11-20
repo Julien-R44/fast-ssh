@@ -1,12 +1,13 @@
 use crate::{
     app::{App, ConfigDisplayMode as ConfigMode},
     ssh_config_store::SshGroupItem,
+    THEME,
 };
 use std::io::Stdout;
 use tui::{
     backend::CrosstermBackend,
     layout::Rect,
-    style::{Color, Modifier, Style},
+    style::{Modifier, Style},
     text::{Span, Spans},
     widgets::{Block, Paragraph, Wrap},
     Frame,
@@ -45,7 +46,7 @@ impl ConfigWidget {
         let mut spans = vec![Spans::from(Span::styled(
             "No item selected.\n",
             Style::default()
-                .fg(Color::Yellow)
+                .fg(THEME.secondary_color)
                 .add_modifier(Modifier::BOLD),
         ))];
 
@@ -62,22 +63,25 @@ impl ConfigWidget {
 
     fn ssh_group_item_to_spans(config: &SshGroupItem) -> Vec<Spans> {
         let mut spans = vec![Spans::from(vec![
-            Span::styled("Host ", Style::default().fg(Color::Magenta)),
-            Span::styled(&config.full_name, Style::default().fg(Color::White)),
+            Span::styled("Host ", Style::default().fg(THEME.primary_color)),
+            Span::styled(
+                &config.full_name,
+                Style::default().fg(THEME.secondary_color),
+            ),
         ])];
 
         config.host_config.iter().for_each(|(key, value)| {
             spans.push(Spans::from(vec![
-                Span::styled("  ", Style::default().fg(Color::Magenta)),
-                Span::styled(key.to_string(), Style::default().fg(Color::Magenta)),
-                Span::styled(" ", Style::default().fg(Color::White)),
-                Span::styled(value, Style::default().fg(Color::White)),
+                Span::styled("  ", Style::default().fg(THEME.primary_color)),
+                Span::styled(key.to_string(), Style::default().fg(THEME.primary_color)),
+                Span::styled(" ", Style::default().fg(THEME.secondary_color)),
+                Span::styled(value, Style::default().fg(THEME.secondary_color)),
             ]));
         });
 
         spans.push(Spans::from(vec![Span::styled(
             "\n",
-            Style::default().fg(Color::White),
+            Style::default().fg(THEME.secondary_color),
         )]));
 
         spans
