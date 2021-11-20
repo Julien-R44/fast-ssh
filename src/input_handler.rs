@@ -18,7 +18,11 @@ pub fn handle_inputs(app: &mut App) -> Result<(), Box<dyn std::error::Error>> {
             KeyCode::Up => app.change_selected_item(false),
             KeyCode::PageDown => app.scroll_config_paragraph(1),
             KeyCode::PageUp => app.scroll_config_paragraph(-1),
-            KeyCode::Enter => app.should_spawn_ssh = true,
+            KeyCode::Enter => {
+                if app.get_selected_item().is_some() {
+                    app.should_spawn_ssh = true;
+                }
+            }
             _ => {}
         };
     }
