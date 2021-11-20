@@ -1,3 +1,4 @@
+use anyhow::{format_err, Context, Result};
 use std::fs;
 use tui::widgets::TableState;
 
@@ -34,7 +35,7 @@ pub struct App {
 }
 
 impl App {
-    pub async fn new() -> Result<App, Box<dyn std::error::Error>> {
+    pub async fn new() -> Result<App> {
         let db = App::create_or_get_db_file()?;
         let scs = SshConfigStore::new(&db).await?;
         let config = resolve_config();
@@ -55,16 +56,17 @@ impl App {
         })
     }
 
-    pub fn create_or_get_db_file() -> Result<FileDatabase, Box<dyn std::error::Error>> {
-        if let Some(config_dir) = dirs::config_dir() {
-            let conf_path = config_dir.join("FastSSH");
-            let db_path = conf_path.join("db.ron");
+    pub fn create_or_get_db_file() -> Result<FileDatabase> {
+        let config_dir =
+            dirs::config_dir().ok_or_else(|| format_err!("Could not get config directory"))?;
 
-            fs::create_dir_all(&conf_path)?;
-            return FileDatabase::new(db_path.to_str().unwrap());
-        }
+        let conf_path = config_dir.join("FastSSH");
+        let db_path = conf_path.join("db.ron");
 
-        Err("Could not find configuration directory".into())
+        fs::create_dir_all(&conf_path)
+            .with_context(|| format_err!("Could not create the config directory"))?;
+
+        FileDatabase::new(db_path.to_str().unwrap())
     }
 
     pub fn get_selected_group(&self) -> &SshGroup {

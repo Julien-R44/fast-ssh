@@ -33,7 +33,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut app = match App::new().await {
         Ok(app) => app,
         Err(e) => {
-            eprintln!("Error: {}", e);
+            eprintln!("{}", e);
             std::process::exit(1);
         }
     };

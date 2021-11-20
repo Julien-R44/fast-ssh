@@ -1,3 +1,4 @@
+use anyhow::{Context, Result};
 use rustbreak::{deser::Ron, FileDatabase as _FileDatabase, RustbreakError};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -13,11 +14,12 @@ pub struct HostDatabaseEntry {
 }
 
 impl FileDatabase {
-    pub fn new(filename: &str) -> Result<FileDatabase, Box<dyn std::error::Error>> {
+    pub fn new(filename: &str) -> Result<FileDatabase> {
         let db =
             _FileDatabase::<HashMap<String, HostDatabaseEntry>, Ron>::load_from_path_or_default(
                 filename,
-            )?;
+            )
+            .with_context(|| format!("Error while loading database from {}", filename))?;
 
         db.load()?;
         Ok(FileDatabase { db })
