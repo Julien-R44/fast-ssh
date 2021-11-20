@@ -22,13 +22,34 @@
 ![](https://i.imgur.com/pVf2hES.png)
 
 # Documentation
-If you already have an SSH configuration file you don't have to add anything, Fast-SSH just parses this file and displays it. 
-If you don't have an SSH configuration file or if you don't know what it does, read this: https://linuxize.com/post/using-the-ssh-config-file/
+The default SSH configuration file should be located at `~/.ssh/config`. If you already have an SSH configuration file with some hosts defined then you don't have to add anything, Fast-SSH just parses this file and displays it. If you don't have an SSH configuration file or you don't have any hosts defined within it then below is an example to help you set one up for use with Fast-SSH. Further information about the SSH configuration file can be found at this link: https://linuxize.com/post/using-the-ssh-config-file/
 
-Fast-SSH has a group system. This allows you to sort your servers, for example, by project, mission or client.
-To make some groups, it's simple, just define your `Host` as `Group/ServerName` ( see full configuration in above picture ) and your groups will be displayed in FastSSH. You can now select a group and display only the servers defined in that group.
+```
+Host *
+    UpdateHostKeys yes
+    
+Host Desktop                            # Name of host you want to connect to, for use with Fast-SSH.
+    HostName 192.168.1.10               # Hostname using an IP address, this can be a public or private one.
+    User YourCoolUsername               # Username for the host you want to SSH into.
+    
+Host Server                             # Name of host you want to connect to, for use with Fast-SSH.
+    HostName 216.58.214.14              # Hostname using an IP address, this can be a public or private one.
+    User YourCoolUsername               # Username for the host you want to SSH into.
+    
+Host AnotherServer                      # Name of host you want to connect to, for use with Fast-SSH.
+    HostName example.com                # Hostname using a domain name.
+    User YourCoolUsername               # Username for the host you want to SSH into.
+    
+Host RaspberyPi/Arch-Linux              # Defined group and name of host for use with Fast-SSH.
+    HostName alarm-pi.local             # Hostname using a locally resolved address.
+    User YourCoolUsername               # Username for the host you want to SSH into.
+    
+Host RaspberryPi/Raspbian               # Defined group and name of host for use with Fast-SSH.
+    HostName raspbian.lan               # Hostname using a locally resolved address.
+    User YourCoolUsername               # Username for the host you want to SSH into.
+```
 
-Now all you have to do is launch Fast-SSH, select your service and press enter to connect.
+Fast-SSH has a group system. This allows you to sort your servers, for example, by project, mission or client. To make some groups, it's simple, just define your `Host` as `Group/ServerName` (see full configuration in above example) and your groups will be displayed in FastSSH. You can now select a group and display only the servers defined in that group. Now all you have to do is launch Fast-SSH, select your service and press enter to connect.
 
 ## File Database
 A file database is stored at `$XDG_CONFIG_HOME/FastSSH/db.ron` ( `%APPDATA%/FastSSH/db.ron` for Windows ). 
