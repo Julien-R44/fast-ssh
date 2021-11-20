@@ -45,6 +45,10 @@ impl SshConfigStore {
         self.config.iter().for_each(|(key, value)| {
             let host_entry = db.get_host_values(key).unwrap();
 
+            if key.contains('*') {
+                return;
+            }
+
             if key.contains('/') {
                 let group_name = key.split('/').next().unwrap();
                 let group_key = key.split('/').skip(1).collect::<Vec<&str>>().join("");
