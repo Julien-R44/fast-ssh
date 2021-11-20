@@ -14,8 +14,8 @@ impl Config {}
 pub fn resolve_config() -> Config {
     Config {
         theme: Theme {
-            primary_color: Color::Red,
-            secondary_color: Color::Green,
+            primary_color: Color::Magenta,
+            secondary_color: Color::White,
         },
     }
 }

@@ -4,7 +4,7 @@ use sublime_fuzzy::best_match;
 use tui::{
     backend::CrosstermBackend,
     layout::Rect,
-    style::{Color, Modifier, Style},
+    style::{Modifier, Style},
     text::{Span, Spans},
     widgets::{Block, Borders, Paragraph},
     Frame,
