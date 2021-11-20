@@ -1,4 +1,5 @@
 use crate::database::FileDatabase;
+use anyhow::{format_err, Result};
 use ssh_cfg::{SshConfig, SshConfigParser, SshHostConfig};
 use std::fmt::Debug;
 
@@ -24,7 +25,7 @@ pub struct SshConfigStore {
 }
 
 impl SshConfigStore {
-    pub async fn new(db: &FileDatabase) -> Result<SshConfigStore, ssh_cfg::Error> {
+    pub async fn new(db: &FileDatabase) -> Result<SshConfigStore> {
         let ssh_config = SshConfigParser::parse_home().await?;
 
         let mut scs = SshConfigStore {
@@ -33,6 +34,11 @@ impl SshConfigStore {
         };
 
         scs.create_ssh_groups(db);
+
+        if scs.groups.is_empty() {
+            return Err(format_err!("Your configuration file contains no entries (or only wildcards) ! Please add at least one."));
+        }
+
         Ok(scs)
     }
 
