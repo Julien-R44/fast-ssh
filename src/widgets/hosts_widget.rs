@@ -37,7 +37,7 @@ impl HostsWidget {
     }
 
     fn create_header() -> Row<'static> {
-        let header_cells = ["Host", "Last Used", "Nb Connection"]
+        let header_cells = ["Host", "Last Used", "# of Conn"]
             .iter()
             .map(|h| Cell::from(*h).style(Style::default().fg(THEME.text_secondary())));
 
