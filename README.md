@@ -36,6 +36,10 @@ Host Server                             # Name of host you want to connect to, f
     HostName 216.58.214.14              # Hostname using an IP address, this can be a public or private one.
     User YourCoolUsername               # Username for the host you want to SSH into.
     
+Host AnotherServer                      # Name of host you want to connect to, for use with Fast-SSH.
+    HostName example.com                # Hostname using a domain name.
+    User YourCoolUsername               # Username for the host you want to SSH into.
+    
 Host RaspberyPi/Arch-Linux              # Defined group and name of host for use with Fast-SSH.
     HostName alarm-pi.local             # Hostname using a locally resolved address.
     User YourCoolUsername               # Username for the host you want to SSH into.
