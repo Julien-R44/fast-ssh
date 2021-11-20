@@ -21,6 +21,17 @@
 
 ![](https://i.imgur.com/pVf2hES.png)
 
+# Installation
+Download the latest release for your platform [here](https://github.com/Julien-R44/fast-ssh/releases), extract it and put it in a directory that is in your PATH (Packages managers coming soon). For example:
+
+```
+sudo cp fast-ssh /usr/bin/fast-ssh
+```
+
+If you use cargo you can run `cargo install fast-ssh`
+
+Then you can launch Fast-SSH with `fast-ssh`. 
+
 # Documentation
 The default SSH configuration file should be located at `~/.ssh/config`. If you already have an SSH configuration file with some hosts defined then you don't have to add anything, Fast-SSH just parses this file and displays it. If you don't have an SSH configuration file or you don't have any hosts defined within it then below is an example to help you set one up for use with Fast-SSH. Further information about the SSH configuration file can be found at this link: https://linuxize.com/post/using-the-ssh-config-file/
 
@@ -88,13 +99,6 @@ theme:
     text_secondary: "#ffffff"
     border_color: "#b967ff"
 ```
-
-# Installation
-Download the latest release for your platform [here](https://github.com/Julien-R44/fast-ssh/releases) and put in directory in your PATH. ( Packages managers coming soon )
-
-If you use cargo you can run `cargo install fast-ssh`
-
-Then you can launch Fast-SSH with `fast-ssh`. 
 
 # Known issues
 If you are a user of the new Windows terminal and you encounter raw AINSI escape sequences when you run fast-ssh, you must unset the TERM environment variable before running the application. Read more about this here : https://github.com/crossterm-rs/crossterm/issues/580
