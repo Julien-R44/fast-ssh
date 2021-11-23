@@ -101,7 +101,7 @@ theme:
 ```
 
 # Known issues
-If you are a user of the new Windows terminal and you encounter raw AINSI escape sequences when you run fast-ssh, you must unset the TERM environment variable before running the application. Read more about this here : https://github.com/crossterm-rs/crossterm/issues/580
+If you are a user of the new Windows terminal and you encounter raw ANSI escape sequences when you run fast-ssh, you must unset the TERM environment variable before running the application. Read more about this here : https://github.com/crossterm-rs/crossterm/issues/580
 
 Best solution would be to create an alias like this : 
 ```
