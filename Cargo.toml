@@ -1,6 +1,6 @@
 [package]
 name = "fast-ssh"
-version = "0.3.0"
+version = "0.3.1"
 license = "MIT"
 description = "Quicky connect to your servers by navigating through your SSH config."
 readme = "README.md"
