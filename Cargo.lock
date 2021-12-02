@@ -771,9 +771,9 @@ checksum = "1ecab6c735a6bb4139c0caafd0cc3635748bbb3acf4550e8138122099251f309"
 
 [[package]]
 name = "ssh_cfg"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7df30390ca2bb50ef601a303bbb1134d777229f1565b2a7166b862253b17da90"
+checksum = "33130e7e8a61e5822f5f6f7f7127e4adad805fcc1a55dc83d2b5c15c1279014c"
 dependencies = [
  "async-fs",
  "dirs 4.0.0",
