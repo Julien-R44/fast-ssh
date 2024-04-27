@@ -90,8 +90,7 @@ impl App {
         self.scs
             .groups
             .iter()
-            .map(|group| &group.items)
-            .flatten()
+            .flat_map(|group| &group.items)
             .collect::<Vec<&SshGroupItem>>()
     }
 

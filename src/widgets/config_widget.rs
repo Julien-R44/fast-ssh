@@ -33,8 +33,7 @@ impl ConfigWidget {
         let spans: Vec<Spans> = app
             .get_all_items()
             .iter()
-            .map(|item| ConfigWidget::ssh_group_item_to_spans(item))
-            .flatten()
+            .flat_map(|item| ConfigWidget::ssh_group_item_to_spans(item))
             .collect();
 
         Paragraph::new(spans)
