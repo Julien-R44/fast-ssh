@@ -57,7 +57,7 @@ pub fn create_layout(app: &App, frame: &mut Frame<CrosstermBackend<Stdout>>) -> 
         .direction(Direction::Horizontal)
         .margin(1)
         .horizontal_margin(0)
-        .constraints(constraints.as_ref())
+        .constraints(constraints.as_slice())
         .split(base_chunk[1]);
 
     AppLayout {
